@@ -1,0 +1,31 @@
+name: Node.js CI - Testes Automatizados
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do seu repositório no servidor do GitHub
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Configura o ambiente Node.js na máquina virtual
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Instala todas as dependências do package.json
+      - name: Instalar dependências
+        run: npm ci
+
+      # 4. Executa a suíte de testes com Jest
+      - name: Executar testes automatizados
+        run: npm test
