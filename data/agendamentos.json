@@ -1,0 +1,24 @@
+[
+  {
+    "id": "agd-1725187200000",
+    "nome_paciente": "Lucas Gabriel Souza",
+    "cpf": "12345678901",
+    "profissional_id": 1,
+    "nome_profissional": "Dra. Ana Paula Silva",
+    "especialidade": "Aconselhamento Nutricional",
+    "data": "2026-09-15",
+    "horario": "09:30",
+    "criado_em": "2026-09-01T10:00:00.000Z"
+  },
+  {
+    "id": "agd-1725273600000",
+    "nome_paciente": "Mariana Barreto",
+    "cpf": "98765432100",
+    "profissional_id": 2,
+    "nome_profissional": "Dr. Carlos Eduardo Mendes",
+    "especialidade": "Atendimento Médico",
+    "data": "2026-09-17",
+    "horario": "10:00",
+    "criado_em": "2026-09-02T14:30:00.000Z"
+  }
+]
