@@ -1,97 +1,51 @@
-# 🏥 Sistema de Agendamento — Clínica de Saúde Modernizada
+# 🏥 Clínica Saúde & Vida - API & Agendamento Web
 
-> **Trabalho Final — Programação e Desenvolvimento Web**  
-> **Projeto 03:** Sistema de Agendamento (Frontend + Backend com Persistência Local JSON)
+> Sistema web full-stack para agendamento, consulta e gestão de consultas médicas e procedimentos de saúde, desenvolvido com Node.js, Express, JavaScript (ES6+) e testes automatizados com Jest e Supertest.
+
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=flat&logo=nodedotjs)
+![Express](https://img.shields.io/badge/Express-5.x-000000?style=flat&logo=express)
+![Jest](https://img.shields.io/badge/Jest-Tested-C21325?style=flat&logo=jest)
+![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=flat&logo=githubactions)
 
 ---
 
-## 📌 Sobre o Projeto
+## 📌 Funcionalidades
 
-A clínica de saúde modernizou suas soluções tecnológicas para proporcionar uma experiência fluida e ágil aos pacientes. Este sistema permite a consulta de profissionais e especialidades, a realização de agendamentos de consultas/exames em datas disponíveis, e a gestão de consultas ativas (busca e cancelamento via CPF).
+- **👨‍⚕️ Corpo Clínico:** Listagem dinâmica dos profissionais de saúde com filtros por nome e especialidade.
+- **📅 Agendamento Interativo:** Seleção dinâmica de profissional, datas e horários disponíveis.
+- **🔍 Gestão por CPF:** Consulta de consultas agendadas e cancelamento direto via interface.
+- **🧪 Testes de Integração:** Suíte de testes automatizados cobrindo os endpoints da API.
+- **🔄 CI/CD Automatizado:** Pipeline no GitHub Actions executando os testes em cada `push` e `pull request`.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Backend:** Node.js, Express.js, CORS
-* **Persistência de Dados:** Arquivos locais JSON (`fs/promises`)
-* **Frontend:** HTML5, CSS3, JavaScript Vanilla (Fetch API)
-* **Controle de Versão:** Git e GitHub
+- **Backend:** Node.js, Express.js, CORS.
+- **Frontend:** HTML5, CSS3, JavaScript (Fetch API, DOM Manipulation).
+- **Testes:** Jest, Supertest.
+- **DevOps & CI/CD:** GitHub Actions.
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```text
 clinica-agendamento/
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # Workflow de CI/CD para rodar testes no GitHub Actions
 ├── data/
-│   ├── profissionais.json    # Dados estáticos de profissionais e disponibilidades
-│   └── agendamentos.json     # Registro dos agendamentos efetuados
-├── public/                   # Interface da aplicação (Frontend)
+│   ├── agendamentos.json     # Armazenamento de agendamentos
+│   └── profissionais.json    # Dados do corpo clínico
+├── public/
 │   ├── css/
-│   │   └── style.css         # Estilização visual da clínica
+│   │   └── style.css          # Estilização da interface web
 │   ├── js/
-│   │   └── app.js            # Integração com a API via Fetch
-│   └── index.html            # Interface principal
-├── .gitignore
-├── package.json
-├── README.md
-└── server.js                 # API REST em Node.js / Express
-```
-
----
-
-## 🚀 Como Executar o Projeto
-
-### Pré-requisitos
-* **Node.js** instalado (versão 18 ou superior)
-* **Git** instalado
-
-### Passo a Passo
-
-1. **Clonar o repositório:**
-   ```bash
-   git clone [https://github.com/SEU_USUARIO/clinica-agendamento.git](https://github.com/SEU_USUARIO/clinica-agendamento.git)
-   cd clinica-agendamento
-   ```
-
-2. **Instalar as dependências:**
-   ```bash
-   npm install
-   ```
-
-3. **Iniciar o servidor backend:**
-   ```bash
-   node server.js
-   ```
-   *O servidor iniciará por padrão em: `http://localhost:3000`*
-
-4. **Acessar a aplicação:**
-   * Abra o navegador e acesse: `http://localhost:3000` (ou abra diretamente o arquivo `public/index.html`).
-
----
-
-## 🔗 Endpoints da API
-
-| Método | Endpoint | Descrição |
-| :--- | :--- | :--- |
-| `GET` | `/api/profissionais` | Lista médicos e filtra por especialidade/nome |
-| `POST` | `/api/agendamentos` | Cria um novo agendamento no arquivo JSON |
-| `GET` | `/api/agendamentos/:cpf` | Retorna consultas vinculadas ao CPF |
-| `DELETE` | `/api/agendamentos/:id` | Cancela e remove uma consulta registrada |
-
----
-
-## 📊 Estrutura Analítica do Projeto (EAP)
-
-1. **Gestão:** Planejamento, documentação e gravação do vídeo demonstrativo.
-2. **Dados:** Modelagem dos schemas de dados nos arquivos JSON.
-3. **API Backend:** Desenvolvimento das rotas HTTP e manipulação assíncrona de arquivos.
-4. **Interface Frontend:** Construção das páginas HTML, estilização CSS e consumo de endpoints JS.
-5. **Entregáveis:** Publicação do código no GitHub e envio do documento PDF final.
-
----
-
-## 👨‍💻 Autor
-
-Desenvolvido por João Marcos de Barcelos Fernandes como trabalho acadêmico da disciplina de Programação e Desenvolvimento Web.
+│   │   └── app.js             # Lógica de integração e manipulação do DOM (Frontend)
+│   └── index.html             # Landing page e formulários
+├── tests/
+│   └── api.test.js            # Suíte de testes automatizados com Jest e Supertest
+├── package.json               # Dependências e scripts do projeto
+├── README.md                  # Documentação do projeto
+└── server.js                  # Ponto de entrada do servidor Express (Backend)

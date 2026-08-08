@@ -13,9 +13,13 @@ app.use(express.json());
 // Servir os arquivos estáticos do frontend da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Caminhos dos arquivos de dados
-const PATH_PROFISSIONAIS = path.join(__dirname, 'data', 'profissionais.json');
-const PATH_AGENDAMENTOS = path.join(__dirname, 'data', 'agendamentos.json');
+// Caminhos dos arquivos de dados.
+// DATA_DIR é configurável via variável de ambiente: em produção usa a pasta
+// 'data' real; nos testes, a suíte aponta para um diretório temporário
+// isolado, garantindo que os testes nunca leiam/escrevam no JSON commitado.
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const PATH_PROFISSIONAIS = path.join(DATA_DIR, 'profissionais.json');
+const PATH_AGENDAMENTOS = path.join(DATA_DIR, 'agendamentos.json');
 
 // --- FUNÇÕES AUXILIARES DE LEITURA E ESCRITA ---
 
@@ -24,13 +28,36 @@ async function lerJson(caminhoArquivo) {
     const data = await fs.readFile(caminhoArquivo, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
-    // Se o arquivo não existir ou falhar a leitura, retorna array vazio
-    return [];
+    if (error.code === 'ENOENT') {
+      // Arquivo ainda não existe: estado inicial válido, começa vazio.
+      return [];
+    }
+    // Qualquer outro erro (JSON corrompido, permissão, etc.) não deve ser
+    // engolido silenciosamente — isso mascara bugs reais.
+    console.error(`Falha ao ler ${caminhoArquivo}:`, error);
+    throw error;
   }
 }
 
 async function salvarJson(caminhoArquivo, conteudo) {
   await fs.writeFile(caminhoArquivo, JSON.stringify(conteudo, null, 2), 'utf-8');
+}
+
+// Fila de escrita por arquivo: como lerJson/salvarJson fazem um ciclo
+// leitura -> verificação -> escrita que não é atômico, duas requisições
+// concorrentes (ex.: dois POSTs simultâneos para o mesmo horário) podiam
+// ambas passar pela checagem de conflito antes de qualquer uma escrever,
+// resultando em agendamento duplicado. Isso serializa as operações de
+// escrita por arquivo, sem bloquear leituras de outros arquivos.
+const filasDeEscrita = new Map();
+
+function comFilaDeEscrita(caminhoArquivo, tarefa) {
+  const filaAnterior = filasDeEscrita.get(caminhoArquivo) || Promise.resolve();
+  const proximaTarefa = filaAnterior.then(tarefa, tarefa);
+  // Evita acúmulo de handlers de rejeição não tratados na fila em si;
+  // o erro real ainda é propagado para quem chamou comFilaDeEscrita.
+  filasDeEscrita.set(caminhoArquivo, proximaTarefa.catch(() => {}));
+  return proximaTarefa;
 }
 
 // Limpa caracteres especiais mantendo apenas números no CPF
@@ -64,6 +91,7 @@ app.get('/api/profissionais', async (req, res) => {
 
     return res.json(profissionais);
   } catch (error) {
+    console.error('Erro ao buscar profissionais:', error);
     return res.status(500).json({ erro: 'Erro ao buscar profissionais.' });
   }
 });
@@ -87,6 +115,7 @@ app.get('/api/agendamentos/:cpf', async (req, res) => {
 
     return res.json(agendamentosPaciente);
   } catch (error) {
+    console.error('Erro ao buscar agendamentos do paciente:', error);
     return res.status(500).json({ erro: 'Erro ao buscar agendamentos do paciente.' });
   }
 });
@@ -118,43 +147,53 @@ app.post('/api/agendamentos', async (req, res) => {
       return res.status(404).json({ erro: 'Profissional não encontrado.' });
     }
 
-    // Buscar agendamentos existentes para checar conflitos
-    const agendamentos = await lerJson(PATH_AGENDAMENTOS);
+    // Lê, checa conflito e escreve dentro da fila do arquivo: isso garante
+    // que duas requisições concorrentes para o mesmo profissional/data/horário
+    // não passem ambas pela checagem antes de qualquer uma salvar.
+    const resultado = await comFilaDeEscrita(PATH_AGENDAMENTOS, async () => {
+      const agendamentos = await lerJson(PATH_AGENDAMENTOS);
 
-    const conflito = agendamentos.find(
-      (a) =>
-        a.profissional_id === Number(profissional_id) &&
-        a.data === data &&
-        a.horario === horario
-    );
+      const conflito = agendamentos.find(
+        (a) =>
+          a.profissional_id === Number(profissional_id) &&
+          a.data === data &&
+          a.horario === horario
+      );
 
-    if (conflito) {
+      if (conflito) {
+        return { conflito: true };
+      }
+
+      const novoAgendamento = {
+        id: `agd-${Date.now()}-${Math.round(Math.random() * 1e6)}`,
+        nome_paciente: nome_paciente.trim(),
+        cpf: cpfLimpo,
+        profissional_id: profissional.id,
+        nome_profissional: profissional.nome,
+        especialidade: profissional.especialidade,
+        data,
+        horario,
+        criado_em: new Date().toISOString(),
+      };
+
+      agendamentos.push(novoAgendamento);
+      await salvarJson(PATH_AGENDAMENTOS, agendamentos);
+
+      return { conflito: false, agendamento: novoAgendamento };
+    });
+
+    if (resultado.conflito) {
       return res.status(409).json({
         erro: 'Este profissional já possui uma consulta marcada para este dia e horário.',
       });
     }
 
-    // Criar objeto do novo agendamento
-    const novoAgendamento = {
-      id: `agd-${Date.now()}`,
-      nome_paciente: nome_paciente.trim(),
-      cpf: cpfLimpo,
-      profissional_id: profissional.id,
-      nome_profissional: profissional.nome,
-      especialidade: profissional.especialidade,
-      data,
-      horario,
-      criado_em: new Date().toISOString(),
-    };
-
-    agendamentos.push(novoAgendamento);
-    await salvarJson(PATH_AGENDAMENTOS, agendamentos);
-
     return res.status(201).json({
       mensagem: 'Agendamento realizado com sucesso!',
-      agendamento: novoAgendamento,
+      agendamento: resultado.agendamento,
     });
   } catch (error) {
+    console.error('Erro ao salvar agendamento:', error);
     return res.status(500).json({ erro: 'Erro ao salvar agendamento.' });
   }
 });
@@ -166,25 +205,46 @@ app.post('/api/agendamentos', async (req, res) => {
 app.delete('/api/agendamentos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const agendamentos = await lerJson(PATH_AGENDAMENTOS);
 
-    const indice = agendamentos.findIndex((a) => a.id === id);
+    const resultado = await comFilaDeEscrita(PATH_AGENDAMENTOS, async () => {
+      const agendamentos = await lerJson(PATH_AGENDAMENTOS);
+      const indice = agendamentos.findIndex((a) => a.id === id);
 
-    if (indice === -1) {
+      if (indice === -1) {
+        return { encontrado: false };
+      }
+
+      const [agendamentoRemovido] = agendamentos.splice(indice, 1);
+      await salvarJson(PATH_AGENDAMENTOS, agendamentos);
+
+      return { encontrado: true, agendamento: agendamentoRemovido };
+    });
+
+    if (!resultado.encontrado) {
       return res.status(404).json({ erro: 'Agendamento não encontrado.' });
     }
 
-    // Remove o agendamento da lista
-    const [agendamentoRemovido] = agendamentos.splice(indice, 1);
-    await salvarJson(PATH_AGENDAMENTOS, agendamentos);
-
     return res.json({
       mensagem: 'Agendamento cancelado com sucesso!',
-      agendamento: agendamentoRemovido,
+      agendamento: resultado.agendamento,
     });
   } catch (error) {
+    console.error('Erro ao cancelar agendamento:', error);
     return res.status(500).json({ erro: 'Erro ao cancelar agendamento.' });
   }
+});
+
+// Rota não encontrada
+app.use((req, res) => {
+  res.status(404).json({ erro: 'Rota não encontrada.' });
+});
+
+// Error handler global: rede de segurança para erros que não passam pelos
+// try/catch das rotas (ex.: JSON malformado no corpo da requisição,
+// interceptado pelo middleware express.json() antes de chegar às rotas).
+app.use((error, req, res, next) => {
+  console.error('Erro não tratado:', error);
+  res.status(500).json({ erro: 'Erro interno do servidor.' });
 });
 
 // Inicialização do Servidor
