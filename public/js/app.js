@@ -4,6 +4,17 @@ const API_URL = '/api';
 // Elementos Globais do DOM
 let profissionaisCache = [];
 
+// Extrai as iniciais (primeiro + último nome) para o fallback do avatar,
+// ignorando prefixos de tratamento como "Dr." e "Dra."
+function obterIniciais(nomeCompleto) {
+  const nomeLimpo = nomeCompleto.replace(/^(Dr\.|Dra\.)\s*/i, '').trim();
+  const partes = nomeLimpo.split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return '?';
+  const primeira = partes[0][0];
+  const ultima = partes.length > 1 ? partes[partes.length - 1][0] : '';
+  return (primeira + ultima).toUpperCase();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Inicialização da página
   carregarProfissionais();
@@ -41,7 +52,10 @@ async function carregarProfissionais(especialidade = '', nome = '') {
       } else {
         container.innerHTML = profissionais.map(p => `
           <div class="card-profissional">
-            <img src="${p.foto}" alt="${p.nome}">
+            <div class="avatar">
+              <img src="${p.foto}" alt="${p.nome}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback">${obterIniciais(p.nome)}</div>
+            </div>
             <h3>${p.nome}</h3>
             <span class="badge">${p.especialidade}</span>
             <p class="registro"><strong>Registro:</strong> ${p.registro}</p>

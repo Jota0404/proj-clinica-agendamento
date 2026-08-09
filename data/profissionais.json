@@ -5,7 +5,7 @@
     "especialidade": "Aconselhamento Nutricional",
     "registro": "CRN-3 45678",
     "bio": "Especialista em reeducação alimentar, nutrição esportiva e promoção de saúde preventiva.",
-    "foto": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300",
+    "foto": "https://images.unsplash.com/photo-1758691462651-611d730c5272?w=300&h=300&fit=crop&crop=faces&q=80",
     "dias_disponiveis": ["2026-09-15", "2026-09-16", "2026-09-18", "2026-09-21"],
     "horarios_disponiveis": ["08:00", "09:30", "11:00", "14:00", "15:30"]
   },
@@ -15,7 +15,7 @@
     "especialidade": "Atendimento Médico",
     "registro": "CRM-DF 123456",
     "bio": "Clínico geral focado em diagnóstico integral, check-ups preventivos e acompanhamento continuado.",
-    "foto": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300",
+    "foto": "https://images.unsplash.com/photo-1758691463333-c79215e8bc3b?w=300&h=300&fit=crop&crop=faces&q=80",
     "dias_disponiveis": ["2026-09-15", "2026-09-17", "2026-09-19", "2026-09-22"],
     "horarios_disponiveis": ["09:00", "10:00", "11:00", "14:30", "16:00"]
   },
@@ -25,7 +25,7 @@
     "especialidade": "Exames Laboratoriais e Imagem",
     "registro": "CRM-DF 987654",
     "bio": "Médica radiologista com vasta experiência em ultrassonografia, ressonância e exames laboratoriais.",
-    "foto": "https://images.unsplash.com/photo-1594824813566-88855ce78c80?w=300",
+    "foto": "https://images.unsplash.com/photo-1758691461513-88a0aef72160?w=300&h=300&fit=crop&crop=faces&q=80",
     "dias_disponiveis": ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-23"],
     "horarios_disponiveis": ["07:30", "08:30", "10:30", "13:30", "15:00"]
   },
@@ -35,7 +35,7 @@
     "especialidade": "Outros Procedimentos",
     "registro": "CREFITO-3 11223",
     "bio": "Fisioterapeuta e especialista em reabilitação física, ergonomia e tratamento de dor crônica.",
-    "foto": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=300",
+    "foto": "https://images.unsplash.com/photo-1758691463582-11aea602cd4a?w=300&h=300&fit=crop&crop=faces&q=80",
     "dias_disponiveis": ["2026-09-15", "2026-09-18", "2026-09-21", "2026-09-24"],
     "horarios_disponiveis": ["08:00", "10:00", "13:00", "15:00", "17:00"]
   }

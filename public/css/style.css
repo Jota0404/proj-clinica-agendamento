@@ -1,30 +1,33 @@
 /* ==========================================
-   1. VARIÁVEIS DE DESIGN E RESET BASE
+   1. VARIÁVEIS DE DESIGN — Verde botânico acessível
    ========================================== */
 :root {
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
-  --secondary: #0d9488;
-  --secondary-hover: #0f766e;
-  --bg-main: #f8fafc;
+  --primary: #5D8266;
+  --primary-hover: #4A6B54;
+  --primary-light: #E8EFE7;
+  --accent: #E0785A;
+  --accent-hover: #C8613F;
+  --accent-light: #FCE3DA;
+  --bg-main: #FAFAF6;
   --bg-card: #ffffff;
-  --bg-alt: #f1f5f9;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --danger: #ef4444;
-  --danger-hover: #dc2626;
-  --success-bg: #dcfce7;
-  --success-text: #166534;
-  --error-bg: #fee2e2;
-  --error-text: #991b1b;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --transition: all 0.3s ease;
+  --bg-alt: #F1F0E9;
+  --text-main: #2C3B30;
+  --text-muted: #6B7568;
+  --border-color: #E3E1D6;
+  --danger: #C4453D;
+  --danger-hover: #A93830;
+  --success-bg: #E8EFE7;
+  --success-text: #3F5C48;
+  --error-bg: #FBE9E7;
+  --error-text: #8A2E27;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(44, 59, 48, 0.06);
+  --shadow-md: 0 2px 8px rgba(44, 59, 48, 0.07);
+  --transition: all 0.2s ease;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Atkinson Hyperlegible', sans-serif;
 }
 
 * {
@@ -35,19 +38,23 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   color: var(--text-main);
   background-color: var(--bg-main);
 }
 
 body {
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
 }
 
 /* ==========================================
@@ -61,19 +68,19 @@ img {
 
 .titulo-secao {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .titulo-secao h2 {
   font-size: 2rem;
   color: var(--text-main);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
 }
 
 .titulo-secao p {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 /* ==========================================
@@ -81,15 +88,16 @@ img {
    ========================================== */
 .btn {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.8rem 1.75rem;
   font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
+  font-weight: 700;
+  border-radius: 999px;
   text-decoration: none;
   cursor: pointer;
-  border: none;
+  border: 1.5px solid transparent;
   transition: var(--transition);
   text-align: center;
+  font-family: var(--font-body);
 }
 
 .btn-primario {
@@ -99,17 +107,16 @@ img {
 
 .btn-primario:hover {
   background-color: var(--primary-hover);
-  transform: translateY(-2px);
 }
 
 .btn-secundario {
-  background-color: var(--secondary);
-  color: #ffffff;
+  background-color: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .btn-secundario:hover {
-  background-color: var(--secondary-hover);
-  transform: translateY(-2px);
+  background-color: var(--primary-light);
 }
 
 .btn-bloco {
@@ -127,8 +134,8 @@ img {
 }
 
 .campo label {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   color: var(--text-main);
 }
 
@@ -138,7 +145,7 @@ img {
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-sm);
   font-size: 0.95rem;
-  font-family: inherit;
+  font-family: var(--font-body);
   color: var(--text-main);
   background-color: #ffffff;
   transition: var(--transition);
@@ -148,7 +155,7 @@ img {
 .campo select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  box-shadow: 0 0 0 3px rgba(93, 130, 102, 0.15);
 }
 
 /* ==========================================
@@ -156,7 +163,7 @@ img {
    ========================================== */
 .navbar {
   background-color: #ffffff;
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -199,7 +206,7 @@ nav ul {
 nav a {
   text-decoration: none;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
   transition: var(--transition);
 }
@@ -211,8 +218,8 @@ nav a:hover {
 .btn-nav {
   background-color: var(--primary);
   color: #ffffff !important;
-  padding: 0.5rem 1.2rem;
-  border-radius: var(--radius-sm);
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
 }
 
 .btn-nav:hover {
@@ -223,8 +230,8 @@ nav a:hover {
    5. SEÇÃO HERO
    ========================================== */
 .hero {
-  padding: 4rem 0;
-  background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
+  padding: 4.5rem 0;
+  background-color: var(--primary-light);
 }
 
 .hero-container {
@@ -236,10 +243,10 @@ nav a:hover {
 
 .hero-texto h2 {
   font-size: 2.5rem;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--text-main);
   margin-bottom: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .hero-texto p {
@@ -255,7 +262,6 @@ nav a:hover {
 
 .hero-imagem img {
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
   object-fit: cover;
   width: 100%;
   max-height: 400px;
@@ -271,41 +277,41 @@ nav a:hover {
 .grid-servicos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 1.75rem;
 }
 
 .card-servico {
   background-color: var(--bg-card);
   padding: 2rem;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   transition: var(--transition);
 }
 
 .card-servico:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
 }
 
 .icon-servico {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .card-servico h3 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 500;
   margin-bottom: 0.75rem;
   color: var(--text-main);
 }
 
 .card-servico p {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
 }
 
 /* ==========================================
-   7. SEÇÃO EQUIPE E FILTROS
+   7. SEÇÃO EQUIPE, FILTROS E AVATARES
    ========================================== */
 .equipe-bg {
   background-color: var(--bg-alt);
@@ -328,32 +334,62 @@ nav a:hover {
 .grid-profissionais {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
+  gap: 1.75rem;
 }
 
 .card-profissional {
   background-color: var(--bg-card);
   border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 1.75rem;
   text-align: center;
+  transition: var(--transition);
 }
 
-.card-profissional img {
+.card-profissional:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Avatar: imagem real + fallback de iniciais em CSS caso a foto não carregue */
+.avatar {
+  position: relative;
   width: 110px;
   height: 110px;
+  margin: 0 auto 1.1rem auto;
+}
+
+.avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 1rem auto;
-  border: 3px solid var(--primary);
+  border: 2.5px solid var(--primary);
+}
+
+.avatar-fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--accent-light);
+  color: var(--primary-hover);
+  border: 2.5px solid var(--primary);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
 }
 
 .card-profissional h3 {
   font-size: 1.15rem;
+  font-weight: 500;
   color: var(--text-main);
   margin-bottom: 0.2rem;
 }
@@ -361,13 +397,13 @@ nav a:hover {
 .badge {
   display: inline-block;
   align-self: center;
-  background-color: #e0f2fe;
-  color: var(--primary);
+  background-color: var(--primary-light);
+  color: var(--primary-hover);
   font-size: 0.78rem;
   font-weight: 700;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
 }
 
 .registro {
@@ -379,7 +415,7 @@ nav a:hover {
 .bio {
   font-size: 0.85rem;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
   margin-top: auto;
 }
 
@@ -394,7 +430,6 @@ nav a:hover {
   background-color: var(--bg-card);
   padding: 2.5rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
   max-width: 800px;
   margin: 0 auto;
@@ -444,7 +479,7 @@ nav a:hover {
   background-color: var(--bg-main);
   padding: 1.5rem;
   border-radius: var(--radius-md);
-  border-left: 5px solid var(--secondary);
+  border-left: 4px solid var(--accent);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -452,6 +487,7 @@ nav a:hover {
 
 .card-agendamento h4 {
   font-size: 1.1rem;
+  font-weight: 500;
   color: var(--text-main);
   margin-bottom: 0.3rem;
 }
@@ -462,18 +498,19 @@ nav a:hover {
 }
 
 .btn-cancelar {
-  background-color: var(--danger);
-  color: #ffffff;
-  border: none;
+  background-color: transparent;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
   padding: 0.6rem 1.2rem;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
+  border-radius: 999px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
+  font-family: var(--font-body);
 }
 
 .btn-cancelar:hover {
-  background-color: var(--danger-hover);
+  background-color: var(--error-bg);
 }
 
 /* ==========================================
@@ -484,7 +521,7 @@ nav a:hover {
   padding: 0.85rem 1rem;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   display: none;
 }
@@ -493,14 +530,14 @@ nav a:hover {
   display: block;
   background-color: var(--success-bg);
   color: var(--success-text);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--primary-light);
 }
 
 .mensagem.erro {
   display: block;
   background-color: var(--error-bg);
   color: var(--error-text);
-  border: 1px solid #fecaca;
+  border: 1px solid #F3C9C4;
 }
 
 .alerta {
@@ -515,7 +552,7 @@ nav a:hover {
    ========================================== */
 footer {
   background-color: var(--text-main);
-  color: #94a3b8;
+  color: #C7D1C9;
   padding: 2.5rem 0;
   text-align: center;
   font-size: 0.9rem;
