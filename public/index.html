@@ -10,14 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- NAVEGAÇÃO / CABEÇALHO -->
   <header class="navbar">
     <div class="container nav-container">
-      <div class="logo">
-        <span class="icon">🏥</span>
-        <h1>Saúde & <span>Vida</span></h1>
-      </div>
+      <div class="logo"><span class="icon">🏥</span><h1>Saúde & <span>Vida</span></h1></div>
       <nav>
         <ul>
           <li><a href="#hero">Início</a></li>
@@ -30,7 +25,6 @@
     </div>
   </header>
 
-  <!-- SEÇÃO HERO (LANDING PAGE) -->
   <section id="hero" class="hero">
     <div class="container hero-container">
       <div class="hero-texto">
@@ -47,148 +41,98 @@
     </div>
   </section>
 
-  <!-- SEÇÃO DE SERVIÇOS -->
   <section id="servicos" class="servicos container">
     <div class="titulo-secao">
       <h2>Nossos Serviços</h2>
       <p>Soluções integradas para o bem-estar e saúde preventiva de toda a sua família.</p>
     </div>
-
     <div class="grid-servicos">
-      <div class="card-servico">
-        <div class="icon-servico">👨‍⚕️</div>
-        <h3>Atendimento Médico</h3>
-        <p>Consultas presenciais com clínicos gerais e especialistas focados em diagnóstico preciso e acompanhamento continuado.</p>
-      </div>
-
-      <div class="card-servico">
-        <div class="icon-servico">🧪</div>
-        <h3>Exames & Imagem</h3>
-        <p>Laboratório de análise clínica próprio e equipamentos de imagem modernos para ultrassonografias e diagnósticos com agilidade.</p>
-      </div>
-
-      <div class="card-servico">
-        <div class="icon-servico">🥗</div>
-        <h3>Aconselhamento Nutricional</h3>
-        <p>Planos alimentares personalizados, reeducação alimentar e nutrição clínica para um estilo de vida mais saudável.</p>
-      </div>
-
-      <div class="card-servico">
-        <div class="icon-servico">⚙️</div>
-        <h3>Outros Procedimentos</h3>
-        <p>Fisioterapia, reabilitação física e tratamentos preventivos conduzidos por equipe multidisciplinar qualificada.</p>
-      </div>
+      <div class="card-servico"><div class="icon-servico">👨‍⚕️</div><h3>Atendimento Médico</h3><p>Consultas presenciais com clínicos gerais e especialistas focados em diagnóstico preciso e acompanhamento continuado.</p></div>
+      <div class="card-servico"><div class="icon-servico">🧪</div><h3>Exames & Imagem</h3><p>Laboratório de análise clínica próprio e equipamentos de imagem modernos para ultrassonografias e diagnósticos com agilidade.</p></div>
+      <div class="card-servico"><div class="icon-servico">🥗</div><h3>Aconselhamento Nutricional</h3><p>Planos alimentares personalizados, reeducação alimentar e nutrição clínica para um estilo de vida mais saudável.</p></div>
+      <div class="card-servico"><div class="icon-servico">⚙️</div><h3>Outros Procedimentos</h3><p>Fisioterapia, reabilitação física e tratamentos preventivos conduzidos por equipe multidisciplinar qualificada.</p></div>
     </div>
   </section>
 
-  <!-- SEÇÃO DE BUSCA E LISTAGEM DA EQUIPE -->
   <section id="equipe" class="equipe-bg">
     <div class="container">
       <div class="titulo-secao">
         <h2>Corpo Clínico & Especialistas</h2>
         <p>Encontre o profissional ideal para o seu atendimento.</p>
       </div>
-
-      <!-- Formulário de Filtro de Profissionais -->
       <form id="form-filtro" class="form-filtro">
-        <div class="campo">
-          <input type="text" id="filtro-especialidade" placeholder="Filtrar por especialidade (ex: Nutrição)">
-        </div>
-        <div class="campo">
-          <input type="text" id="filtro-nome" placeholder="Filtrar por nome do médico">
-        </div>
+        <div class="campo"><input type="text" id="filtro-especialidade" placeholder="Filtrar por especialidade (ex: Nutrição)"></div>
+        <div class="campo"><input type="text" id="filtro-nome" placeholder="Filtrar por nome do profissional"></div>
         <button type="submit" class="btn btn-primario">Filtrar</button>
       </form>
-
-      <!-- Grid onde o app.js renderiza a lista de profissionais -->
-      <div id="lista-profissionais" class="grid-profissionais">
-        <!-- Renderizado dinamicamente pelo JavaScript -->
-      </div>
+      <div id="lista-profissionais" class="grid-profissionais"></div>
     </div>
   </section>
 
-  <!-- SEÇÃO DE AGENDAMENTO DE CONSULTAS -->
   <section id="agendamento" class="container agendamento-secao">
     <div class="titulo-secao">
       <h2>Agendamento de Consulta / Exame</h2>
-      <p>Preencha os dados abaixo para reservar o seu horário de atendimento.</p>
+      <p>Escolha primeiro a especialidade, depois o profissional, a data e o horário.</p>
     </div>
-
     <div class="card-formulario">
       <form id="form-agendamento">
         <div class="grid-form">
           <div class="campo full-width">
-            <label for="select-profissional">Profissional / Especialidade *</label>
-            <select id="select-profissional" required>
-              <option value="">Carregando profissionais...</option>
-            </select>
+            <label for="select-especialidade">Especialidade *</label>
+            <select id="select-especialidade" required><option value="">Carregando especialidades...</option></select>
           </div>
-
-          <div class="campo">
-            <label for="select-data">Data Disponível *</label>
-            <select id="select-data" required>
-              <option value="">-- Selecione o profissional primeiro --</option>
-            </select>
+          <div class="campo full-width">
+            <label for="select-profissional">Profissional *</label>
+            <select id="select-profissional" required disabled><option value="">-- Selecione a especialidade primeiro --</option></select>
           </div>
-
           <div class="campo">
-            <label for="select-horario">Horário *</label>
-            <select id="select-horario" required>
-              <option value="">-- Selecione o profissional primeiro --</option>
-            </select>
+            <label for="select-data">Data disponível *</label>
+            <select id="select-data" required disabled><option value="">-- Selecione o profissional primeiro --</option></select>
           </div>
-
           <div class="campo">
-            <label for="input-nome">Nome Completo do Paciente *</label>
-            <input type="text" id="input-nome" placeholder="Digite seu nome completo" required>
+            <label for="select-horario">Horário disponível *</label>
+            <select id="select-horario" required disabled><option value="">-- Selecione a data primeiro --</option></select>
           </div>
-
           <div class="campo">
-            <label for="input-cpf">CPF do Paciente (apenas números) *</label>
-            <input type="text" id="input-cpf" placeholder="Ex: 12345678900" maxlength="11" required>
+            <label for="input-nome">Nome completo do paciente *</label>
+            <input type="text" id="input-nome" placeholder="Digite seu nome completo" minlength="3" required>
+          </div>
+          <div class="campo">
+            <label for="input-cpf">CPF do paciente *</label>
+            <input type="text" id="input-cpf" placeholder="Ex.: 123.456.789-00" maxlength="14" inputmode="numeric" required>
           </div>
         </div>
-
         <button type="submit" class="btn btn-primario btn-bloco">Confirmar Agendamento</button>
-
-        <div id="mensagem-agendamento" class="mensagem"></div>
+        <div id="mensagem-agendamento" class="mensagem" aria-live="polite"></div>
       </form>
     </div>
   </section>
 
-  <!-- SEÇÃO DE CONSULTA E CANCELAMENTO POR CPF -->
   <section id="minhas-consultas" class="consultas-bg">
     <div class="container">
       <div class="titulo-secao">
         <h2>Minhas Consultas</h2>
         <p>Consulte seus horários marcados ou cancele um agendamento informando seu CPF.</p>
       </div>
-
       <div class="card-formulario consulta-box">
         <form id="form-consulta-cpf" class="form-busca">
           <div class="campo flex-grow">
             <label for="input-busca-cpf">Informe o CPF para busca:</label>
-            <input type="text" id="input-busca-cpf" placeholder="Digite os 11 dígitos do CPF" maxlength="11" required>
+            <input type="text" id="input-busca-cpf" placeholder="Digite os 11 dígitos do CPF" maxlength="14" inputmode="numeric" required>
           </div>
           <button type="submit" class="btn btn-secundario">Consultar</button>
         </form>
-
-        <div id="resultado-consultas" class="lista-resultados">
-          <!-- Renderizado dinamicamente pelo JavaScript -->
-        </div>
+        <div id="resultado-consultas" class="lista-resultados"></div>
       </div>
     </div>
   </section>
 
-  <!-- RODAPÉ -->
   <footer>
     <div class="container footer-container">
       <p>&copy; 2026 Clínica Saúde & Vida — Todos os direitos reservados.</p>
       <p>Desenvolvido para o Trabalho Final de Programação e Desenvolvimento Web.</p>
     </div>
   </footer>
-
-  <!-- SCRIPT DO FRONTEND -->
   <script src="js/app.js"></script>
 </body>
 </html>
