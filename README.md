@@ -1,51 +1,94 @@
-# 🏥 Clínica Saúde & Vida - API & Agendamento Web
+# 🏥 Clínica Saúde & Vida — Sistema de Agendamento
 
-> Sistema web full-stack para agendamento, consulta e gestão de consultas médicas e procedimentos de saúde, desenvolvido com Node.js, Express, JavaScript (ES6+) e testes automatizados com Jest e Supertest.
+Sistema web full-stack desenvolvido para o **Projeto 03 — Sistema de Agendamento**. Permite consultar profissionais, escolher especialidade, profissional, data e horário, realizar agendamentos, consultar compromissos por CPF e cancelar agendamentos.
 
-![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=flat&logo=nodedotjs)
-![Express](https://img.shields.io/badge/Express-5.x-000000?style=flat&logo=express)
-![Jest](https://img.shields.io/badge/Jest-Tested-C21325?style=flat&logo=jest)
-![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=flat&logo=githubactions)
+## 🎯 Requisitos do Projeto 03
 
----
+- Escolha da especialidade e do profissional.
+- Exibição das datas disponíveis por profissional.
+- Exibição dos horários disponíveis para a data escolhida.
+- Formulário com nome e CPF do paciente.
+- Persistência local em arquivo JSON.
+- Consulta de agendamentos por CPF.
+- Cancelamento de agendamento.
+- Bloqueio de conflito de profissional/data/horário.
+- API REST para especialidades, profissionais, disponibilidade e agendamentos.
+- Filtro de profissionais por especialidade e busca por nome.
 
-## 📌 Funcionalidades
+## 🛠️ Tecnologias
 
-- **👨‍⚕️ Corpo Clínico:** Listagem dinâmica dos profissionais de saúde com filtros por nome e especialidade.
-- **📅 Agendamento Interativo:** Seleção dinâmica de profissional, datas e horários disponíveis.
-- **🔍 Gestão por CPF:** Consulta de consultas agendadas e cancelamento direto via interface.
-- **🧪 Testes de Integração:** Suíte de testes automatizados cobrindo os endpoints da API.
-- **🔄 CI/CD Automatizado:** Pipeline no GitHub Actions executando os testes em cada `push` e `pull request`.
+- **Backend:** Node.js + Express
+- **Frontend:** HTML5 + CSS3 + JavaScript
+- **Dados:** JSON local
+- **Testes:** Jest + Supertest
+- **CI:** GitHub Actions
 
----
+## ▶️ Como executar localmente
 
-## 🛠️ Tecnologias Utilizadas
+Pré-requisito: **Node.js 20 ou superior**.
 
-- **Backend:** Node.js, Express.js, CORS.
-- **Frontend:** HTML5, CSS3, JavaScript (Fetch API, DOM Manipulation).
-- **Testes:** Jest, Supertest.
-- **DevOps & CI/CD:** GitHub Actions.
+```bash
+git clone https://github.com/Jota0404/proj-clinica-agendamento.git
+cd proj-clinica-agendamento
+npm ci
+npm start
+```
 
----
+Acesse `http://localhost:3000` no navegador.
 
-## 📁 Estrutura do Projeto
+### 🧪 Testes
+
+```bash
+npm test
+```
+
+A suíte cobre especialidades, filtros de profissionais, disponibilidade, criação, validações, conflito, consulta por CPF e cancelamento.
+
+## 🔌 Endpoints principais
+
+| Método | Endpoint | Função |
+|---|---|---|
+| GET | `/health` | Verifica se o servidor está funcionando |
+| GET | `/api/especialidades` | Lista especialidades |
+| GET | `/api/profissionais` | Lista/filtra profissionais |
+| GET | `/api/disponibilidade?profissional_id=1&data=2026-09-15` | Consulta horários livres |
+| POST | `/api/agendamentos` | Cria agendamento |
+| GET | `/api/agendamentos/:cpf` | Consulta agendamentos por CPF |
+| DELETE | `/api/agendamentos/:id` | Cancela agendamento |
+
+## 📁 Estrutura
 
 ```text
-clinica-agendamento/
-├── .github/
-│   └── workflows/
-│       └── ci.yml             # Workflow de CI/CD para rodar testes no GitHub Actions
+proj-clinica-agendamento/
+├── .github/workflows/ci.yml
 ├── data/
-│   ├── agendamentos.json     # Armazenamento de agendamentos
-│   └── profissionais.json    # Dados do corpo clínico
+│   ├── agendamentos.json
+│   └── profissionais.json
 ├── public/
-│   ├── css/
-│   │   └── style.css          # Estilização da interface web
-│   ├── js/
-│   │   └── app.js             # Lógica de integração e manipulação do DOM (Frontend)
-│   └── index.html             # Landing page e formulários
+│   ├── css/style.css
+│   ├── js/app.js
+│   └── index.html
 ├── tests/
-│   └── api.test.js            # Suíte de testes automatizados com Jest e Supertest
-├── package.json               # Dependências e scripts do projeto
-├── README.md                  # Documentação do projeto
-└── server.js                  # Ponto de entrada do servidor Express (Backend)
+│   └── api.test.js
+├── package.json
+├── package-lock.json
+└── server.js
+```
+
+## 🩺 Detalhe divertido — médicos da ficção
+
+Os profissionais fictícios receberam avatares inspirados em médicos/personagens famosos da ficção: **Dr. House**, **J.D. de *Scrubs***, **The Eleventh Doctor de *Doctor Who*** e **Dr. McCoy de *Star Trek***. As imagens são carregadas a partir do Wikimedia Commons, em vez de serem copiadas para o repositório.
+
+As páginas das imagens informam as respectivas condições de reutilização: Hugh Laurie possui arquivo sob **CC BY 2.0**; Zach Braff, sob **CC BY-SA 2.0**; The Eleventh Doctor, sob **CC BY-SA 3.0**; e a fotografia de DeForest Kelley como Dr. McCoy está indicada no Commons como **domínio público nos EUA por ausência de aviso de copyright**. urlHugh Laurie — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Hugh_Laurie_2009.jpg · urlZach Braff — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Zach_Braff_05a_(5417514932).jpg · urlThe Eleventh Doctor — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Eleventh_Doctor.jpg · urlDr. McCoy — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:DeForest_Kelley,_Dr._McCoy,_Star_Trek.jpg
+
+> **Observação acadêmica:** os nomes, registros, biografias e disponibilidades da clínica são fictícios. As referências aos personagens são apenas um elemento visual/humorístico. As imagens continuam hospedadas externamente conforme as condições das fontes indicadas.
+
+## 📦 Entrega acadêmica
+
+**Repositório:** https://github.com/Jota0404/proj-clinica-agendamento
+
+**Vídeo de apresentação:** _preencher após publicação do vídeo_
+
+**Projeto:** Projeto 03 — Sistema de Agendamento
+
+**Responsável:** João Marcos de B. Fernandes
