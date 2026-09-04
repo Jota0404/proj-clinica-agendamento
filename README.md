@@ -2,21 +2,18 @@
 
 Sistema web full-stack desenvolvido para o **Projeto 03 — Sistema de Agendamento**. Permite consultar profissionais, escolher especialidade, profissional, data e horário, realizar agendamentos, consultar compromissos por CPF e cancelar agendamentos.
 
-## 🎯 Requisitos atendidos
+## 🎯 Requisitos do Projeto 03
 
-- Escolha de especialidade e profissional.
-- Exibição de datas disponíveis por profissional.
-- Consulta de horários disponíveis por data.
-- Cadastro de paciente com nome e CPF.
-- Persistência local em JSON.
+- Escolha da especialidade e do profissional.
+- Exibição das datas disponíveis por profissional.
+- Exibição dos horários disponíveis para a data escolhida.
+- Formulário com nome e CPF do paciente.
+- Persistência local em arquivo JSON.
 - Consulta de agendamentos por CPF.
 - Cancelamento de agendamento.
 - Bloqueio de conflito de profissional/data/horário.
 - API REST para especialidades, profissionais, disponibilidade e agendamentos.
-- Filtro de profissionais por especialidade e nome.
-- Testes automatizados com Jest + Supertest.
-- Integração contínua com GitHub Actions.
-- Interface responsiva em HTML, CSS e JavaScript.
+- Filtro de profissionais por especialidade e busca por nome.
 
 ## 🛠️ Tecnologias
 
@@ -37,25 +34,21 @@ npm ci
 npm start
 ```
 
-Depois, acesse:
+Acesse `http://localhost:3000` no navegador.
 
-```
-http://localhost:3000
-```
-
-### 🧪 Executar os testes
+### 🧪 Testes
 
 ```bash
 npm test
 ```
 
-A suíte valida as principais regras da API, incluindo especialidades, disponibilidade, criação, conflito, consulta por CPF e cancelamento.
+A suíte cobre especialidades, filtros de profissionais, disponibilidade, criação, validações, conflito, consulta por CPF e cancelamento.
 
 ## 🔌 Endpoints principais
 
 | Método | Endpoint | Função |
 |---|---|---|
-| GET | `/health` | Verifica se a API está funcionando |
+| GET | `/health` | Verifica se o servidor está funcionando |
 | GET | `/api/especialidades` | Lista especialidades |
 | GET | `/api/profissionais` | Lista/filtra profissionais |
 | GET | `/api/disponibilidade?profissional_id=1&data=2026-09-15` | Consulta horários livres |
@@ -76,20 +69,19 @@ proj-clinica-agendamento/
 │   ├── js/app.js
 │   └── index.html
 ├── tests/
-│   ├── api.test.js
-│   └── disponibilidade.test.js
+│   └── api.test.js
 ├── package.json
 ├── package-lock.json
 └── server.js
 ```
 
-## 🎬 Detalhe divertido — médicos da ficção
+## 🩺 Detalhe divertido — médicos da ficção
 
-Os avatares do corpo clínico utilizam fotografias de atores/personagens médicos encontradas no **Wikimedia Commons**, com indicação da referência fictícia na interface. As referências escolhidas são **Dr. House**, **J.D. de Scrubs**, **The Eleventh Doctor de Doctor Who** e **Dr. McCoy de Star Trek**.
+Os profissionais fictícios receberam avatares inspirados em médicos/personagens famosos da ficção: **Dr. House**, **J.D. de *Scrubs***, **The Eleventh Doctor de *Doctor Who*** e **Dr. McCoy de *Star Trek***. As imagens são carregadas a partir do Wikimedia Commons, em vez de serem copiadas para o repositório.
 
-As imagens foram selecionadas por estarem disponíveis no Commons sob licenças que permitem reutilização, observando as respectivas condições de atribuição. Por exemplo, a imagem de Hugh Laurie está licenciada em CC BY 2.0, a de Zach Braff em CC BY-SA 2.0 e a do Eleventh Doctor em CC BY-SA 3.0. urlFonte — Hugh Laurie no Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Hugh_Laurie_2009.jpg · urlFonte — Zach Braff no Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Zach_Braff_05a_(5417514932).jpg · urlFonte — Eleventh Doctor no Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Eleventh_Doctor.jpg · urlFonte — Dr. McCoy no Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:DeForest_Kelley,_Dr._McCoy,_Star_Trek.jpg
+As páginas das imagens informam as respectivas condições de reutilização: Hugh Laurie possui arquivo sob **CC BY 2.0**; Zach Braff, sob **CC BY-SA 2.0**; The Eleventh Doctor, sob **CC BY-SA 3.0**; e a fotografia de DeForest Kelley como Dr. McCoy está indicada no Commons como **domínio público nos EUA por ausência de aviso de copyright**. urlHugh Laurie — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Hugh_Laurie_2009.jpg · urlZach Braff — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Zach_Braff_05a_(5417514932).jpg · urlThe Eleventh Doctor — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:Eleventh_Doctor.jpg · urlDr. McCoy — Wikimedia Commonshttps://commons.wikimedia.org/wiki/File:DeForest_Kelley,_Dr._McCoy,_Star_Trek.jpg
 
-> **Observação:** os nomes dos profissionais da clínica continuam sendo fictícios. As referências aos personagens são apenas um elemento visual/humorístico do projeto acadêmico.
+> **Observação acadêmica:** os nomes, registros, biografias e disponibilidades da clínica são fictícios. As referências aos personagens são apenas um elemento visual/humorístico. As imagens continuam hospedadas externamente conforme as condições das fontes indicadas.
 
 ## 📦 Entrega acadêmica
 
