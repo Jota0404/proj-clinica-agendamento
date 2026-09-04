@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "nome": "Dra. Ana Paula Silva",
+    "nome": "Dr. André Silva",
     "especialidade": "Aconselhamento Nutricional",
     "registro": "CRN-3 45678",
     "bio": "Especialista em reeducação alimentar, nutrição esportiva e promoção de saúde preventiva.",
@@ -12,23 +12,23 @@
   },
   {
     "id": 2,
-    "nome": "Dr. Carlos Eduardo Mendes",
+    "nome": "Dr. Ricardo Mendes",
     "especialidade": "Atendimento Médico",
     "registro": "CRM-DF 123456",
     "bio": "Clínico geral focado em diagnóstico integral, check-ups preventivos e acompanhamento continuado.",
-    "foto": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Zach_Braff_05a_(5417514932).jpg",
-    "referencia_ficticia": "J.D. — Scrubs",
+    "foto": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+    "referencia_ficticia": "Rick Sanchez — Rick and Morty",
     "dias_disponiveis": ["2026-09-15", "2026-09-17", "2026-09-19", "2026-09-22"],
     "horarios_disponiveis": ["09:00", "10:00", "11:00", "14:30", "16:00"]
   },
   {
     "id": 3,
-    "nome": "Dra. Mariana Costa",
+    "nome": "Dr. Marcelo Costa",
     "especialidade": "Exames Laboratoriais e Imagem",
     "registro": "CRM-DF 987654",
-    "bio": "Médica radiologista com vasta experiência em ultrassonografia, ressonância e exames laboratoriais.",
-    "foto": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Eleventh_Doctor.jpg",
-    "referencia_ficticia": "The Eleventh Doctor — Doctor Who",
+    "bio": "Médico radiologista com experiência em ultrassonografia, ressonância e exames laboratoriais.",
+    "foto": "https://conteudo.imguol.com.br/c/entretenimento/bf/2017/12/11/doutor-estranho-benedict-cumberbatch-1512999748040_v2_1x1.jpg",
+    "referencia_ficticia": "Dr. Strange — Marvel",
     "dias_disponiveis": ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-23"],
     "horarios_disponiveis": ["07:30", "08:30", "10:30", "13:30", "15:00"]
   },
