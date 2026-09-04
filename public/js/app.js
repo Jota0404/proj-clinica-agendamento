@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('select-data')?.addEventListener('change', atualizarHorarios);
   document.getElementById('form-agendamento')?.addEventListener('submit', criarAgendamento);
   document.getElementById('form-consulta-cpf')?.addEventListener('submit', buscarConsultasPorCPF);
+  criarModalConfirmacao();
   ['input-cpf', 'input-busca-cpf'].forEach(id => document.getElementById(id)?.addEventListener('input', e => e.target.value = formatarCPF(e.target.value)));
 });
 
@@ -95,11 +96,60 @@ async function buscarConsultasPorCPF(event) {
   } catch (error) { console.error(error); container.innerHTML = '<p class="erro">Erro ao conectar com o servidor para buscar agendamentos.</p>'; }
 }
 
+function criarModalConfirmacao() {
+  if (document.getElementById('modal-confirmacao')) return;
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="modal-confirmacao" class="modal-overlay" aria-hidden="true">
+      <div class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <div class="modal-icone">!</div>
+        <h3 id="modal-titulo">Cancelar agendamento?</h3>
+        <p>Tem certeza de que deseja cancelar esta consulta? Esta ação liberará o horário para novos agendamentos.</p>
+        <div class="modal-acoes">
+          <button type="button" class="btn btn-secundario" id="modal-nao">Manter consulta</button>
+          <button type="button" class="btn btn-cancelar-confirmar" id="modal-sim">Sim, cancelar</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function fecharModalConfirmacao() {
+  const modal = document.getElementById('modal-confirmacao');
+  if (modal) { modal.classList.remove('aberto'); modal.setAttribute('aria-hidden', 'true'); }
+}
+
+function abrirModalConfirmacao(idAgendamento) {
+  const modal = document.getElementById('modal-confirmacao');
+  if (!modal) return;
+  modal.classList.add('aberto');
+  modal.setAttribute('aria-hidden', 'false');
+  const sim = document.getElementById('modal-sim');
+  const nao = document.getElementById('modal-nao');
+  sim.onclick = () => { fecharModalConfirmacao(); executarCancelamento(idAgendamento); };
+  nao.onclick = fecharModalConfirmacao;
+  modal.onclick = (event) => { if (event.target === modal) fecharModalConfirmacao(); };
+  document.onkeydown = (event) => { if (event.key === 'Escape') fecharModalConfirmacao(); };
+  sim.focus();
+}
+
 async function cancelarAgendamento(idAgendamento) {
-  if (!confirm('Tem certeza de que deseja cancelar esta consulta?')) return;
+  abrirModalConfirmacao(idAgendamento);
+}
+
+async function executarCancelamento(idAgendamento) {
   try {
     const res = await fetch(API_URL + '/agendamentos/' + idAgendamento, { method: 'DELETE' }), data = await res.json();
-    if (!res.ok) { alert(data.erro || 'Erro ao cancelar o agendamento.'); return; }
-    alert('✅ Agendamento cancelado com sucesso!'); document.getElementById('form-consulta-cpf').dispatchEvent(new Event('submit'));
-  } catch (error) { console.error(error); alert('Erro de conexão ao tentar cancelar o agendamento.'); }
+    if (!res.ok) { mostrarMensagemModal(data.erro || 'Erro ao cancelar o agendamento.', true); return; }
+    mostrarMensagemModal('Agendamento cancelado com sucesso!', false);
+    document.getElementById('form-consulta-cpf').dispatchEvent(new Event('submit'));
+  } catch (error) { console.error(error); mostrarMensagemModal('Erro de conexão ao tentar cancelar o agendamento.', true); }
+}
+
+function mostrarMensagemModal(mensagem, erro) {
+  const modal = document.getElementById('modal-confirmacao');
+  if (!modal) return;
+  const caixa = modal.querySelector('.modal-confirmacao');
+  caixa.innerHTML = `<div class="modal-icone ${erro ? 'erro' : 'sucesso'}">${erro ? '!' : '✓'}</div><h3>${erro ? 'Não foi possível cancelar' : 'Agendamento cancelado'}</h3><p>${mensagem}</p><div class="modal-acoes modal-acoes-unica"><button type="button" class="btn btn-primario" id="modal-ok">Entendi</button></div>`;
+  modal.classList.add('aberto');
+  modal.setAttribute('aria-hidden', 'false');
+  document.getElementById('modal-ok').onclick = () => { fecharModalConfirmacao(); criarModalConfirmacao(); };
 }
