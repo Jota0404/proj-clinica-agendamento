@@ -151,5 +151,5 @@ function mostrarMensagemModal(mensagem, erro) {
   caixa.innerHTML = `<div class="modal-icone ${erro ? 'erro' : 'sucesso'}">${erro ? '!' : '✓'}</div><h3>${erro ? 'Não foi possível cancelar' : 'Agendamento cancelado'}</h3><p>${mensagem}</p><div class="modal-acoes modal-acoes-unica"><button type="button" class="btn btn-primario" id="modal-ok">Entendi</button></div>`;
   modal.classList.add('aberto');
   modal.setAttribute('aria-hidden', 'false');
-  document.getElementById('modal-ok').onclick = () => { fecharModalConfirmacao(); criarModalConfirmacao(); };
+  document.getElementById('modal-ok').onclick = () => { fecharModalConfirmacao(); modal.remove(); criarModalConfirmacao(); };
 }
